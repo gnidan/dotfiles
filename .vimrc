@@ -11,7 +11,7 @@ colorscheme delek
 set autoindent
 set smartindent
 
-set formatoptions=croqla
+set formatoptions=tcroqaw
 
 " Word wrap two before the end of the line
 set wm=2
