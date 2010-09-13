@@ -19,6 +19,9 @@ set wm=2
 " Buffers don't need to be saved before switching, they remember undo, etc.
 set hidden
 
+" Map leader to ,
+let mapleader = " "
+
 " Longer history memory for searches, etc.
 set history=1000
 
