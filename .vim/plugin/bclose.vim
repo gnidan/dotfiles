@@ -61,5 +61,5 @@ command! Kwbd call <SID>Kwbd(1)
 nnoremap <silent> <Plug>Kwbd :<C-u>Kwbd<CR>
 
 " Create a mapping (e.g. in your .vimrc) like this:
-nmap <Leader>bd <Plug>Kwbd
+nmap <F3> <Plug>Kwbd
 

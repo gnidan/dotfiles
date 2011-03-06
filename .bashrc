@@ -5,6 +5,8 @@
 # If not running interactively, don't do anything
 [ -z "$PS1" ] && return
 
+export VISUAL=vim
+
 # don't put duplicate lines in the history. See bash(1) for more options
 export HISTCONTROL=ignoredups
 
@@ -87,7 +89,7 @@ set -o ignoreeof
 # comment out to use emacs mode (the default)
 set -o vi
 
-export PATH="~/bin:$PATH"
+export PATH="~/bin:$PATH:~/narwhal/bin"
 
 #export PATH="/home/gnd25/nachos/bin:/home/gnd25/bin/mips-x86.linux-xgcc:/bin:$PATH"
 #export PATH="/home/gnd25/nachos/bin:/bin:$PATH"

@@ -6,7 +6,7 @@ set softtabstop=2
 set sw=2
 set tabstop=2
 set expandtab
-colorscheme delek
+colorscheme desert
 
 set autoindent
 set smartindent
@@ -64,3 +64,7 @@ endif
 if &term == "screen" || &term == "xterm"
   set title
 endif
+
+set pastetoggle=<F2>
+
+map <LEADER>n :call ReloadSnippets(a:snippets_dir &ft)<CR>
