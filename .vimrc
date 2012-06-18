@@ -1,6 +1,10 @@
 " THIS AIN'T VI ANYMORE
 set nocompatible
 
+" use pathogen
+filetype off
+call pathogen#infect()
+
 " Some personal preferences
 set softtabstop=2
 set sw=2
@@ -20,7 +24,12 @@ set wm=2
 set hidden
 
 " Map leader to ,
-let mapleader = " "
+let mapleader = ","
+
+" Tabbed editing
+nmap ,, :tabnew<CR>
+nmap ,. :tabnext<CR>
+nmap ., :tabpre<CR>
 
 " Longer history memory for searches, etc.
 set history=1000
@@ -67,4 +76,77 @@ endif
 
 set pastetoggle=<F2>
 
+<<<<<<< HEAD
 map <LEADER>n :call ReloadSnippets(a:snippets_dir &ft)<CR>
+=======
+augroup RubyTests
+  au!
+  autocmd BufRead,BufNewFile *_test.rb,test_*.rb
+    \ :nmap gt V:<C-U>!$HOME/.vim/bin/ruby-run-focused-unit-test
+    \ % <C-R>=line("'<")<CR>p <CR>|
+    \ :nmap gT :<C-U>!testdrb %<CR>
+  autocmd BufRead,BufNewFile *_spec.rb
+    \ :nmap gs V:<C-U>!$HOME/.vim/bin/ruby-run-focused-spec
+    \ % <C-R>=line("'<")<CR>p <CR>|
+    \ :nmap gS :<C-U>!spec %<CR>
+augroup END
+
+
+" always use command edit window
+nnoremap : q:i
+nnoremap / q/i
+nnoremap ? q?i
+
+" set ack
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
+inoremap ii <esc>
+
+" control-H is hex mode
+nnoremap <C-H> :Hexmode<CR>
+inoremap <C-H> <Esc>:Hexmode<CR>
+vnoremap <C-H> :<C-U>Hexmode<CR>
+" ex command for toggling hex mode - define mapping if desired
+command -bar Hexmode call ToggleHex()
+
+" helper function to toggle hex mode
+function ToggleHex()
+  " hex mode should be considered a read-only operation
+  " save values for modified and read-only for restoration later,
+  " and clear the read-only flag for now
+  let l:modified=&mod
+  let l:oldreadonly=&readonly
+  let &readonly=0
+  let l:oldmodifiable=&modifiable
+  let &modifiable=1
+  if !exists("b:editHex") || !b:editHex
+    " save old options
+    let b:oldft=&ft
+    let b:oldbin=&bin
+    " set new options
+    setlocal binary " make sure it overrides any textwidth, etc.
+    let &ft="xxd"
+    " set status
+    let b:editHex=1
+    " switch to hex editor
+    %!xxd
+  else
+    " restore old options
+    let &ft=b:oldft
+    if !b:oldbin
+      setlocal nobinary
+    endif
+    " set status
+    let b:editHex=0
+    " return to normal editing
+    %!xxd -r
+  endif
+  " restore values for modified and read only state
+  let &mod=l:modified
+  let &readonly=l:oldreadonly
+  let &modifiable=l:oldmodifiable
+endfunction
+
+map <leader>h1 VypVr=
+map <leader>h2 VypVr-
+>>>>>>> vim stuff
