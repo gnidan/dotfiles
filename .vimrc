@@ -76,9 +76,6 @@ endif
 
 set pastetoggle=<F2>
 
-<<<<<<< HEAD
-map <LEADER>n :call ReloadSnippets(a:snippets_dir &ft)<CR>
-=======
 augroup RubyTests
   au!
   autocmd BufRead,BufNewFile *_test.rb,test_*.rb
@@ -149,4 +146,3 @@ endfunction
 
 map <leader>h1 VypVr=
 map <leader>h2 VypVr-
->>>>>>> vim stuff
