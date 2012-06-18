@@ -5,9 +5,11 @@
 #
 ###############################################################################
 
-xmodmap -e 'remove Lock = Caps_Lock'
-xmodmap -e 'keysym Caps_Lock = Control_L'
-xmodmap -e 'add Control = Control_L'
+if [ -n "$DISPLAY" ]; then
+  xmodmap -e 'remove Lock = Caps_Lock'
+  xmodmap -e 'keysym Caps_Lock = Control_L'
+  xmodmap -e 'add Control = Control_L'
+fi
 
 
 ###############################################################################
@@ -29,7 +31,7 @@ fi
 #
 ###############################################################################
 
-if [ -n `which xrdb` -a -n "$DISPLAY" ]; then
+if [ -n `which xrdb` ] && [ -n "$DISPLAY" ]; then
   xrdb ~/.Xdefaults
 fi
 
