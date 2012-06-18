@@ -1,96 +1,111 @@
 # ~/.bashrc: executed by bash(1) for non-login shells.
-# see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
-# for examples
 
-# If not running interactively, don't do anything
-[ -z "$PS1" ] && return
 
-export VISUAL=vim
+###############################################################################
+# Terminal friendliness
+#
+###############################################################################
 
-# don't put duplicate lines in the history. See bash(1) for more options
-export HISTCONTROL=ignoredups
+# vi mode
+set -o vi
+
+set -o ignoreeof
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
+# enable programmable completion features (you don't need to enable
+# this, if it's already enabled in /etc/bash.bashrc and /etc/profile
+# sources /etc/bash.bashrc).
+if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
+    . /etc/bash_completion
+fi
+
+
+###############################################################################
+# History
+#
+###############################################################################
+
+# don't put duplicate lines in the history. See bash(1) for more options
+# ... or force ignoredups and ignorespace
+HISTCONTROL=ignoredups:ignorespace
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
+HISTSIZE=1000
+HISTFILESIZE=2000
+
 # make less more friendly for non-text input files, see lesspipe(1)
-[ -x /usr/bin/lesspipe ] && eval "$(lesspipe)"
+[ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+
+###############################################################################
+# Colors
+#
+###############################################################################
+
+# check for color support
+if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+  color_prompt=yes
+else
+  color_prompt=
+fi
+
+if [ -f .bash_colors ]; then
+  . .bash_colors
+fi
+
+if [ "$force_color" == "y*" ]; then
+  color_prompt=yes
+fi
+
+if [ "$force_no_color" == "y*" ]; then
+  color_prompt=no
+fi
+
+
+###############################################################################
+# Set the prompt
+#
+###############################################################################
 
 # set variable identifying the chroot you work in (used in the prompt below)
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
+PS1_root='${debian_chroot:+($debian_chroot)}'
 
-# Comment in the above and uncomment this below for a color prompt
-#PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+if [ "$color_prompt" = yes ]; then
+  case "$HOSTNAME" in
+      tempest)
+        HOST_COLOR="$BBlue$On_White";;
+      *)
+        HOST_COLOR="$IGreen";;
+  esac
 
-# If this is an xterm set the title to user@host:dir
-case "$TERM" in
-xterm*|rxvt*)
-    PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}: ${PWD/$HOME/~}\007"'
-    # enable programmable completion features (you don't need to enable
-    # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
-    # sources /etc/bash.bashrc).
-    if [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-    fi
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-#;;
-    ;;
-screen)
-    set -o functrace
-    trap "echo -ne '\033k'bash'\033\\'" DEBUG RETURN
+  USER_COLOR="$IGreen"
 
-    PROMPT_COMMAND='echo -ne "\033]0;bash\007"'
-
-    # enable programmable completion features (you don't need to enable this,
-    # if it's already enabled in /etc/bash.bashrc and /etc/profile sources
-    # /etc/bash.bashrc).
-    if [ -f /etc/bash_completion ]; then
-        . /etc/bash_completion
-    fi
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
-    ;;
-*)
-    ;;
-esac
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-
-#if [ -f ~/.bash_aliases ]; then
-#    . ~/.bash_aliases
-#fi
-
-# enable color support of ls and also add handy aliases
-if [ "$TERM" != "dumb" ]; then
-    alias ls='ls -G'
-    #alias dir='ls --color=auto --format=vertical'
-    #alias vdir='ls --color=auto --format=long'
+  PS1='$'
+  PS1_user="$USER_COLOR\u"
+  PS1_host="$HOST_COLOR\h"
+  PS1_prompt="$BBlue\w $White$ "
+  PS1="$PS1_root($PS1_host$White) $PS1_user$White: $PS1_prompt"
+else
+  PS1="$PS1_root(\h) \u: \w $ "
 fi
 
-# some more ls aliases
-#alias ll='ls -l'
-#alias la='ls -A'
-#alias l='ls -CF'
-alias time='/usr/bin/time'
-alias lock='xscreensaver-command -lock'
-alias clear='tput reset'
 
+###############################################################################
+# Program settings
+#
+###############################################################################
 
-# Specify that ^D won't log you out.
-set -o ignoreeof 
+# Alias definitions.
+if [ -f ~/.bash_aliases ]; then
+    . ~/.bash_aliases
+fi
 
-# make vi the command-line editor
-# comment out to use emacs mode (the default)
-set -o vi
-
-export PATH="~/bin:$PATH:~/narwhal/bin"
-
-#export PATH="/home/gnd25/nachos/bin:/home/gnd25/bin/mips-x86.linux-xgcc:/bin:$PATH"
-#export PATH="/home/gnd25/nachos/bin:/bin:$PATH"
-#export ARCHDIR="/home/gnd25/bin/mips-x86.linux-xgcc"
