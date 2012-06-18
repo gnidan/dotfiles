@@ -81,8 +81,10 @@ PS1_root='${debian_chroot:+($debian_chroot)}'
 
 if [ "$color_prompt" = yes ]; then
   case "$HOSTNAME" in
-      tempest)
+      tempest*)
         HOST_COLOR="$BBlue$On_White";;
+      snark*)
+        HOST_COLOR="$Purple";;
       *)
         HOST_COLOR="$IGreen";;
   esac
@@ -92,7 +94,7 @@ if [ "$color_prompt" = yes ]; then
   PS1='$'
   PS1_user="$USER_COLOR\u"
   PS1_host="$HOST_COLOR\h"
-  PS1_prompt="$BBlue\w $White$ "
+  PS1_prompt="$BBlue\w $White$ $Color_Off"
   PS1="$PS1_root($PS1_host$White) $PS1_user$White: $PS1_prompt"
 else
   PS1="$PS1_root(\h) \u: \w $ "
