@@ -55,8 +55,12 @@ else
   color_prompt=
 fi
 
-if [ -f .bash_colors ]; then
-  . .bash_colors
+if [ "$TERM" = screen ]; then
+  color_prompt=yes
+fi
+
+if [ -f "$HOME/.bash_colors" ]; then
+  . "$HOME/.bash_colors"
 fi
 
 if [ "$force_color" == "y*" ]; then
@@ -107,7 +111,27 @@ fi
 ###############################################################################
 
 # Alias definitions.
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f $HOME/.bash_aliases ]; then
+    . $HOME/.bash_aliases
 fi
+
+export PATH="/home/gnidan/.gem/ruby/1.9.1/bin:$PATH"
+
+# Man page coloring
+
+man() {
+	env \
+		LESS_TERMCAP_mb=$(printf "\e[1;31m") \
+		LESS_TERMCAP_md=$(printf "\e[1;31m") \
+		LESS_TERMCAP_me=$(printf "\e[0m") \
+		LESS_TERMCAP_se=$(printf "\e[0m") \
+		LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+		LESS_TERMCAP_ue=$(printf "\e[0m") \
+		LESS_TERMCAP_us=$(printf "\e[1;32m") \
+			man "$@"
+}
+
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" # This loads RVM into a shell session.
+
+[[ -s "$HOME/.pythonbrew/etc/bashrc" ]] && source "$HOME/.pythonbrew/etc/bashrc"
 

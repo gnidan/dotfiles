@@ -1,3 +1,5 @@
+set encoding=utf-8
+
 " THIS AIN'T VI ANYMORE
 set nocompatible
 
@@ -99,10 +101,6 @@ let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
 inoremap ii <esc>
 
-" control-H is hex mode
-nnoremap <C-H> :Hexmode<CR>
-inoremap <C-H> <Esc>:Hexmode<CR>
-vnoremap <C-H> :<C-U>Hexmode<CR>
 " ex command for toggling hex mode - define mapping if desired
 command -bar Hexmode call ToggleHex()
 
@@ -146,3 +144,5 @@ endfunction
 
 map <leader>h1 VypVr=
 map <leader>h2 VypVr-
+
+let g:Powerline_symbols = 'fancy'
