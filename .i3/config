@@ -1,4 +1,3 @@
-force_xinerama yes
 # i3 config file (v4)
 #
 # Please see http://i3wm.org/docs/userguide.html for a complete reference!
@@ -18,6 +17,7 @@ floating_modifier Mod1
 
 # start a terminal
 bindsym Mod1+Return exec i3-sensible-terminal
+bindsym Mod1+b exec chromium-browser
 
 # kill focused window
 bindsym Mod1+Shift+q kill
@@ -168,10 +168,10 @@ bar {
   }
 }
 
-# Java Should  fLoAt
-for_window [title="KGS*"] floating enable
-for_window [title="CGoban*"] floating enable
-for_window [class="net-sourceforge-jnlp-runtime-Boot"] floating enable
+# Java Should stack
+for_window [title="KGS*"] stacking enable
+for_window [title="CGoban*"] stacking enable
+for_window [class="net-sourceforge-jnlp-runtime-Boot"] stacking enable
 
 for_window [class="Wine"] floating enable
 
@@ -185,3 +185,4 @@ new_float 1pixel
 
 force_focus_wrapping no
 
+exec "$HOME/.map_keys"
