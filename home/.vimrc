@@ -146,3 +146,4 @@ endfunction
 map <leader>h1 VypVr=
 map <leader>h2 VypVr-
 
+nnoremap <F4> :NumbersOnOff<CR>
