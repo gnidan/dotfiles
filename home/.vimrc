@@ -12,6 +12,7 @@ set softtabstop=2
 set sw=2
 set tabstop=2
 set expandtab
+set shiftwidth=2
 colorscheme desert
 
 set autoindent
@@ -145,4 +146,3 @@ endfunction
 map <leader>h1 VypVr=
 map <leader>h2 VypVr-
 
-let g:Powerline_symbols = 'fancy'
