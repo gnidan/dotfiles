@@ -3,10 +3,6 @@ set encoding=utf-8
 " THIS AIN'T VI ANYMORE
 set nocompatible
 
-" use pathogen
-filetype off
-call pathogen#infect()
-
 " Some personal preferences
 set softtabstop=2
 set sw=2
@@ -19,6 +15,10 @@ set autoindent
 set smartindent
 
 set formatoptions=tcroqw
+
+" use pathogen
+filetype off
+call pathogen#infect()
 
 " Word wrap two before the end of the line
 set wm=2
