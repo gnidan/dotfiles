@@ -31,9 +31,14 @@ fi
 #
 ###############################################################################
 
-if [ -n `which xrdb` ] && [ -n "$DISPLAY" ]; then
+if [ -n `which xrdb` ] && [ -n "$DISPLAY" ] && [ -f ~/.Xdefaults ]; then
   xrdb ~/.Xdefaults
 fi
+
+if [ -n `which xrdb` ] && [ -n "$DISPLAY" ] && [ -f ~/.Xresources ]; then
+  xrdb ~/.Xresources
+fi
+
 
 export EDITOR="vim"
 export TERMINAL="xterm"
